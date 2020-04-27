@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ecrecommender"
+    }
+  },
+  "defaultProject": "ecrecommender",
+  "cli": {
+    "analytics": "42142888-38df-4850-9d60-ffbc902ba99e"
+  }
 }
