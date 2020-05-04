@@ -2,4 +2,13 @@
   <h1>{{title}}</h1>
   <br>
   <h4>{{msg.hello}}</h4>
+  <br><br>
+  Username:&nbsp;&nbsp;<input  (keyup)="onKeyUsername($event)" type="text">
+  <br><br>
+  Password:&nbsp;&nbsp;&nbsp;<input  type="password" (keyup)="onKeyPassword($event)">
+  <br><br>
+  <button (click)="login()">Login</button>
+<br><br>
+<button (click)="createAccount()">Create Account</button>
+  
 </div>
