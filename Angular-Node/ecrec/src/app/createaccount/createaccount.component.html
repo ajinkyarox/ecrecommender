@@ -4,8 +4,17 @@
     </mat-card-header>
         <mat-card-content>
         <!-- This is where you need to add your login form -->
+        <br><br>
+  Username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  (keyup)="onKeyUsername($event)" type="text">
+  <br><br>
+  Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="password" (keyup)="onKeyPassword($event)">
+  <br><br>
+ Reenter Password:&nbsp;&nbsp;&nbsp;<input  type="repassword" (keyup)="onKeyResPassword($event)">
+  <br><br>
         </mat-card-content>
+        
         <mat-dialog-actions>
-            <button  mat-raised-button (click)="closeMe()">Close</button>
+            
+  <button mat-raised-button (click)="createAccount()">Login</button>&nbsp;&nbsp;&nbsp;<button  mat-raised-button (click)="closeMe()">Close</button>
         </mat-dialog-actions>
 </mat-card>
