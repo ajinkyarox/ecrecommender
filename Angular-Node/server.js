@@ -6,11 +6,7 @@ var cors = require('cors')
 var { buildSchema } = require('graphql');
 
 // Initialize a GraphQL schema
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
+var schema = require('./loginSchema');
 
 // Root resolver
 var root = {

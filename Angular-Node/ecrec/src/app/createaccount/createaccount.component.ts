@@ -1,5 +1,20 @@
 import { Component, OnInit,Inject, Injectable } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from  '@angular/material/dialog';
+import gql from "graphql-tag";
+import { Apollo } from 'apollo-angular'
+
+
+const ADD_LOGIN = gql`
+    mutation addLogin(
+        $username: String!,
+        $password: String!) {
+          addLogin(
+            username: $username,
+            password: $password) {
+            _id
+        }
+    }
+`;
 
 @Component({
   selector: 'app-createaccount',
@@ -7,10 +22,11 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from  '@angular/material/dialo
   styleUrls: ['./createaccount.component.css']
 })
 export class CreateaccountComponent implements OnInit {
-username='';
+   
+  username='';
 password='';
 repassword='';
-  constructor(private  dialogRef:  MatDialogRef<CreateaccountComponent>, @Inject(MAT_DIALOG_DATA) public  data:  any) { }
+  constructor(private apollo: Apollo,private  dialogRef:  MatDialogRef<CreateaccountComponent>, @Inject(MAT_DIALOG_DATA) public  data:  any) { }
 
   ngOnInit(): void {
   }
@@ -26,6 +42,30 @@ repassword='';
   }
   createAccount(){
     
+    this.apollo.mutate({
+      mutation: gql`
+      mutation addLogin(
+        $username: String!,
+        $password: String!) {
+          addLogin(
+            username: $username,
+            password: $password) {
+              username
+              password
+            }
+            
+        
+    }
+      
+      `,
+      variables:{
+        username:this.username,
+        password:this.password
+      }
+    })
+    .subscribe(result=>{
+console.log(result.data)
+    })
   }
 closeMe(){
   this.dialogRef.close();
