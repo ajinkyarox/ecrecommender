@@ -8,6 +8,7 @@ var GraphQLString = require('graphql').GraphQLString;
 var GraphQLInt = require('graphql').GraphQLInt;
 var GraphQLDate = require('graphql-date');
 var LoginModel = require('./login');
+var flag=false;
 
 var loginType = new GraphQLObjectType({
     name: 'login',
@@ -50,7 +51,9 @@ var loginType = new GraphQLObjectType({
 
   var mutation = new GraphQLObjectType({
     name: 'Mutation',
+    
     fields: function () {
+      
       return {
         addLogin: {
           type: loginType,
@@ -63,13 +66,24 @@ var loginType = new GraphQLObjectType({
                 type: GraphQLString
               }
           },
-          resolve: function (root, params) {
-            const loginModel = new LoginModel(params);
-            const newLogin = loginModel.save();
-            if (!newLogin) {
-              throw new Error('Error');
-            }
-            return newLogin
+          resolve: async function (root, params) {
+            var loginModel = null;
+            var newLogin=null; 
+            LoginModel.find({username:params.username}).then(doc => {
+              if(doc[0]==null){
+                loginModel=new LoginModel(params);
+                newLogin = loginModel.save()
+  
+               
+              }
+              
+            })
+            .catch(err => {
+              console.error(err)
+            })
+            
+    const result = await LoginModel.findOne({username:params.username}).exec();
+            return result
           }
         },
         

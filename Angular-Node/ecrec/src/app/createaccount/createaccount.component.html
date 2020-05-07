@@ -9,12 +9,12 @@
   <br><br>
   Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="password" (keyup)="onKeyPassword($event)">
   <br><br>
- Reenter Password:&nbsp;&nbsp;&nbsp;<input  type="repassword" (keyup)="onKeyResPassword($event)">
+ Reenter Password:&nbsp;&nbsp;&nbsp;<input  type="password" (keyup)="onKeyResPassword($event)">
   <br><br>
         </mat-card-content>
         
         <mat-dialog-actions>
             
-  <button mat-raised-button (click)="createAccount()">Login</button>&nbsp;&nbsp;&nbsp;<button  mat-raised-button (click)="closeMe()">Close</button>
+  <button mat-raised-button (click)="createAccount()">Create Account</button>&nbsp;&nbsp;&nbsp;<button  mat-raised-button (click)="closeMe()">Close</button>
         </mat-dialog-actions>
 </mat-card>

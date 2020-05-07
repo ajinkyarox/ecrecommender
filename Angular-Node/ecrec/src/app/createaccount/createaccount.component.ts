@@ -2,6 +2,7 @@ import { Component, OnInit,Inject, Injectable } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from  '@angular/material/dialog';
 import gql from "graphql-tag";
 import { Apollo } from 'apollo-angular'
+import { async } from '@angular/core/testing';
 
 
 const ADD_LOGIN = gql`
@@ -64,7 +65,22 @@ repassword='';
       }
     })
     .subscribe(result=>{
-console.log(result.data)
+      
+      
+        Object.entries(result.data).forEach(entry => {
+          
+          if(entry[1]==null){
+            alert('Success')
+          }
+          else if(entry[1].username!=null){
+            alert('Username already exists')
+          }
+
+      })
+        //alert("Username already exists")
+      
+      
+
     })
   }
 closeMe(){
