@@ -42,47 +42,59 @@ repassword='';
     this.repassword=event.target.value;
   }
   createAccount(){
-    
-    this.apollo.mutate({
-      mutation: gql`
-      mutation addLogin(
-        $username: String!,
-        $password: String!) {
-          addLogin(
-            username: $username,
-            password: $password) {
-              username
-              password
-            }
-            
-        
-    }
-      
-      `,
-      variables:{
-        username:this.username,
-        password:this.password
-      }
-    })
-    .subscribe(result=>{
-      
-      
-        Object.entries(result.data).forEach(entry => {
+    if(this.username!=null && this.username!=undefined && this.username.trim()!='' &&
+    this.password!=null && this.password!=undefined && this.password.trim()!='' && 
+    this.repassword!=null && this.repassword!=undefined && this.repassword.trim()!='' && 
+    this.password==this.repassword){
+      this.apollo.mutate({
+        mutation: gql`
+        mutation addLogin(
+          $username: String!,
+          $password: String!) {
+            addLogin(
+              username: $username,
+              password: $password) {
+                username
+                password
+              }
+              
           
-          if(entry[1]==null){
-            alert('Success')
-          }
-          else if(entry[1].username!=null){
-            alert('Username already exists')
-          }
-
+      }
+        
+        `,
+        variables:{
+          username:this.username,
+          password:this.password
+        }
       })
-        //alert("Username already exists")
-      
-      
-
-    })
-  }
+      .subscribe(result=>{
+        
+        
+          Object.entries(result.data).forEach(entry => {
+            
+            if(entry[1]==null){
+              alert('Success')
+              this.dialogRef.close()
+            }
+            else if(entry[1].username!=null){
+              alert('Username already exists')
+            }
+  
+        })
+          //alert("Username already exists")
+        
+        
+  
+      })
+  
+    }
+    else if(this.password!=this.repassword){
+      alert('Enter correct password')
+    }
+    else{
+      alert('Enter all fields')
+    }
+      }
 closeMe(){
   this.dialogRef.close();
 }
