@@ -16,7 +16,7 @@ export class AppComponent {
   username='';
   password='';
 
-  constructor(private  dialog:  MatDialog) {
+  constructor(private  dialog:  MatDialog,private apollo: Apollo) {
       }
   onKeyUsername(event){
     this.username=event.target.value;
@@ -25,7 +25,39 @@ export class AppComponent {
     this.password=event.target.value;
   }
   login(){
-    console.log(this.username+' '+this.password)
+    
+this.apollo.query({
+  query: gql`
+  query  login($username: String!,
+    $password: String!){
+      login(
+        username: $username,
+        password: $password) {
+          username
+          password
+        }
+    }
+  `,
+  variables:{
+    username:this.username,
+    password:this.password
+  }
+}).subscribe(result=>{
+  console.log(result.data)
+  Object.entries(result.data).forEach(entry => {
+            
+  console.log(entry[0]+' '+entry[1])
+  if(entry[1]==null){
+    alert('Wrong Username or password')
+  }
+  else{
+    
+  }
+
+})
+
+
+})
   }
   createAccount(){
     this.dialog.open(CreateaccountComponent);

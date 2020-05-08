@@ -29,20 +29,20 @@ var loginType = new GraphQLObjectType({
     name: 'Query',
     fields: function () {
       return {
-        book: {
+        login: {
           type: loginType,
           args: {
-            id: {
-              name: '_id',
+            username: {
+              type: GraphQLString
+            },
+            password: {
               type: GraphQLString
             }
           },
-          resolve: function (root, params) {
-            const bookDetails = BookModel.findById(params.id).exec()
-            if (!bookDetails) {
-              throw new Error('Error')
-            }
-            return bookDetails
+          resolve: async function (root, params) {
+            const res=await LoginModel.findOne({username:params.username,password:params.password})
+            console.log(res)
+            return res          
           }
         }
       }
