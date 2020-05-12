@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Apollo } from 'apollo-angular'
 import gql from 'graphql-tag'
 import { MatDialog, MatDialogRef } from  '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
+import { MainComponent } from './main/main.component';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,11 @@ export class AppComponent {
   username='';
   password='';
 
-  constructor(private  dialog:  MatDialog,private apollo: Apollo) {
-      }
+  constructor(private  dialog:  MatDialog,private router: Router,private apollo: Apollo) {
+      
+    
+  }
+      
   onKeyUsername(event){
     this.username=event.target.value;
   }
@@ -51,7 +55,8 @@ this.apollo.query({
     alert('Wrong Username or password')
   }
   else{
-    
+    console.log("YES")
+    this.router.navigate(['/maincomponent'])
   }
 
 })
@@ -59,6 +64,9 @@ this.apollo.query({
 
 })
   }
+
+
+
   createAccount(){
     this.dialog.open(CreateaccountComponent);
   }

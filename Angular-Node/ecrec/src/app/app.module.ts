@@ -14,16 +14,20 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
+import { MainComponent } from './main/main.component';
+import { RouterModule,Routes } from '@angular/router';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateaccountComponent
+    CreateaccountComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
@@ -33,6 +37,7 @@ import { CreateaccountComponent } from './createaccount/createaccount.component'
       MatButtonModule,
        MatCardModule, 
        MatFormFieldModule,
+
        
   ],
  
