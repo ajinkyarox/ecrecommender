@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
 import { MainComponent } from './main/main.component';
 import { RouterModule,Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -23,7 +24,8 @@ import { RouterModule,Routes } from '@angular/router';
   declarations: [
     AppComponent,
     CreateaccountComponent,
-    MainComponent
+    MainComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
