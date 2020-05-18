@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateproductComponent } from '../createproduct/createproduct.component';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { UpdateproductComponent } from '../updateproduct/updateproduct.component';
 
 @Component({
   selector: 'app-main',
@@ -33,7 +34,7 @@ products:any;
         Object.entries(result.data).forEach(entry => {
           
                     this.products=entry[1]
-                    console.log(this.products[0].name)
+                    console.log(this.products[0])
 
       })
         //alert("Username already exists")
@@ -54,6 +55,12 @@ products:any;
   }
 createProduct(){
   this.dialog.open(CreateproductComponent);
+}
+
+updateProduct(name){
+  console.log(name)
+  this.dialog.open(UpdateproductComponent);
+
 }
 
 }

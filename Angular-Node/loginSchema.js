@@ -84,6 +84,33 @@ var loginType = new GraphQLObjectType({
     fields: function () {
       
       return {
+        updateProduct: {
+type: productType,
+args :{
+  name: {
+    type: GraphQLString
+  },
+  type: {
+    type: GraphQLString
+  },
+  details: {
+    type: GraphQLString
+  }
+},
+resolve: async function(root,params){
+  var productModel = null;
+  var newProduct=null; 
+  const filter = { name: params.name };
+const update = { type:params.type,details:params.details };
+
+// `doc` is the document _after_ `update` was applied because of
+// `new: true`
+let doc = await ProductModel.findOneAndUpdate(filter, update, {
+  new: true
+});
+return doc;
+}
+        },
         addLogin: {
           type: loginType,
           args: {
@@ -135,9 +162,7 @@ resolve: async function(root,params){
     if(doc[0]==null){
       productModel=new ProductModel(params);
       newProduct = productModel.save()
-
-     
-    }
+}
     
   })
   .catch(err => {

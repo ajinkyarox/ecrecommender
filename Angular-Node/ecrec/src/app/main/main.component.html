@@ -5,3 +5,36 @@
 <button (click)="logOut()">LogOut</button>
 <br><br>
 <button (click)="createProduct()">Create Product</button>
+<br><br>
+<table id="products">
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Type
+      </th>
+      <th>
+        Details
+      </th>
+      <th>
+          Update/Delete
+      </th>
+    </tr>
+  
+    <tr *ngFor = "let product of products">
+      <td>
+        {{product.name}}
+      </td>
+      <td>
+          {{product.type}}
+      </td>
+      <td>
+          {{product.details}}
+      </td>
+      <td>
+          <button (click)="updateProduct(product.name)">Update</button>&nbsp;&nbsp;<button>Delete</button>
+      </td>
+    </tr>
+  
+  </table>

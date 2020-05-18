@@ -18,6 +18,7 @@ import { MainComponent } from './main/main.component';
 import { RouterModule,Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CreateproductComponent } from './createproduct/createproduct.component';
+import { UpdateproductComponent } from './updateproduct/updateproduct.component';
 
 
 
@@ -27,7 +28,8 @@ import { CreateproductComponent } from './createproduct/createproduct.component'
     CreateaccountComponent,
     MainComponent,
     LoginComponent,
-    CreateproductComponent
+    CreateproductComponent,
+    UpdateproductComponent
   ],
   imports: [
     BrowserModule,
