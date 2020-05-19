@@ -5,16 +5,16 @@
         <mat-card-content>
         <!-- This is where you need to add your login form -->
         <br><br>
-  Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  (keyup)="onKeyName($event)" type="text">
+  Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value="{{name}}" [disabled]="true"  (keyup)="onKeyName($event)" type="text">
   <br><br>
-  Type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="text" (keyup)="onKeyType($event)">
+  Type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value="{{type}}" type="text" (keyup)="onKeyType($event)">
   <br><br>
- Details:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="text" (keyup)="onKeyDetails($event)">
+ Details:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="text" value="{{details}}" (keyup)="onKeyDetails($event)">
   <br><br>
         </mat-card-content>
         
         <mat-dialog-actions>
             
-  <button mat-raised-button (click)="createProduct()">Create Product</button>&nbsp;&nbsp;&nbsp;<button  mat-raised-button (click)="closeMe()">Close</button>
+  <button mat-raised-button (click)="updateProduct()">Update Product</button>&nbsp;&nbsp;&nbsp;<button  mat-raised-button (click)="closeMe()">Close</button>
         </mat-dialog-actions>
 </mat-card>

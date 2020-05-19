@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import gql from 'graphql-tag';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-createproduct',
@@ -12,12 +13,10 @@ export class CreateproductComponent implements OnInit {
 name='';
 type='';
 details='';
-  constructor(private apollo: Apollo,private  dialogRef:  MatDialogRef<CreateproductComponent>, @Inject(MAT_DIALOG_DATA) public  data:  any) { }
+  constructor(private apollo: Apollo,private router: Router,private  dialogRef:  MatDialogRef<CreateproductComponent>, @Inject(MAT_DIALOG_DATA) public  data:  any) { }
 
   ngOnInit(): void {
-  
-    
-  
+
   }
 createProduct(){
   if(this.name!=null && this.name!=undefined && this.name.trim()!='' &&
@@ -56,6 +55,8 @@ createProduct(){
           if(entry[1]==null){
             alert('Success')
             this.dialogRef.close()
+            location.reload()
+
           }
           else if(entry[1].name!=null){
             alert('Product already exists')

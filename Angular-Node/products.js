@@ -6,5 +6,5 @@ var ProductSchema = new mongoose.Schema({
   type: String,
   details:String
 });
-
+mongoose.set('useFindAndModify', false);
 module.exports = mongoose.model('products', ProductSchema);

@@ -57,9 +57,10 @@ createProduct(){
   this.dialog.open(CreateproductComponent);
 }
 
-updateProduct(name){
+updateProduct(name,type,details){
   console.log(name)
-  this.dialog.open(UpdateproductComponent);
+  var obj={'name':name,'type':type,'details':details}
+  this.dialog.open(UpdateproductComponent,{data:obj});
 
 }
 
