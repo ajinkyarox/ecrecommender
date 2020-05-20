@@ -84,6 +84,26 @@ var loginType = new GraphQLObjectType({
     fields: function () {
       
       return {
+        deleteProduct: {
+          type: productType,
+          args :{
+            name: {
+              type: GraphQLString
+            },
+            type: {
+              type: GraphQLString
+            },
+            details: {
+              type: GraphQLString
+            }
+          },
+          resolve: async function(root,params){
+            ProductModel.deleteOne({name:params.name}, function (err) {
+              if(err) console.log(err);
+              console.log("Successful deletion");
+            });
+          }
+        },
         updateProduct: {
 type: productType,
 args :{

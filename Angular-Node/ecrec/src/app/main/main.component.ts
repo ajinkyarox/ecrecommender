@@ -5,6 +5,7 @@ import { CreateproductComponent } from '../createproduct/createproduct.component
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { UpdateproductComponent } from '../updateproduct/updateproduct.component';
+import { DeleteproductComponent } from '../deleteproduct/deleteproduct.component';
 
 @Component({
   selector: 'app-main',
@@ -63,5 +64,9 @@ updateProduct(name,type,details){
   this.dialog.open(UpdateproductComponent,{data:obj});
 
 }
-
+deleteProduct(name,type,details){
+  console.log(name)
+  var obj={'name':name,'type':type,'details':details}
+  this.dialog.open(DeleteproductComponent,{data:obj});
+}
 }
