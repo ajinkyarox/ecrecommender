@@ -17,7 +17,7 @@ title='EC-RECOMMENDER';
 loginStatus=false;
   constructor(private router: Router) {}
   loginPage(){
-
+    localStorage.setItem('username','')
 this.router.navigate(['/logincomponent'])
   }
  

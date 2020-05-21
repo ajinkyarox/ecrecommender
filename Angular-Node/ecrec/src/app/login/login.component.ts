@@ -58,6 +58,7 @@ this.apollo.query({
   }
   else{
     console.log("YES")
+    localStorage.setItem('username',this.username)
     this.router.navigate(['/maincomponent'])
   }
 

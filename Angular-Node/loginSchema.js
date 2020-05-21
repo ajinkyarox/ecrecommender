@@ -9,6 +9,7 @@ var GraphQLInt = require('graphql').GraphQLInt;
 var GraphQLDate = require('graphql-date');
 var LoginModel = require('./login');
 var ProductModel=require('./products')
+var PurchaseDetails=require('./purchasedetails')
 var flag=false;
 
 var loginType = new GraphQLObjectType({
@@ -44,7 +45,23 @@ var loginType = new GraphQLObjectType({
     }
   });
 
-
+  var purchaseDetailsType = new GraphQLObjectType({
+    name: 'purchasedetails',
+    fields: function () {
+      return {
+        
+        name: {
+          type: GraphQLString
+        },
+        username: {
+          type: GraphQLString
+        },
+        count: {
+          type: GraphQLString
+        }
+      }
+    }
+  });
 
   
   var queryType = new GraphQLObjectType({
@@ -84,6 +101,49 @@ var loginType = new GraphQLObjectType({
     fields: function () {
       
       return {
+        addPurchaseDetails: {
+          type: purchaseDetailsType,
+          args :{
+            name: {
+              type: GraphQLString
+            },
+            username: {
+              type: GraphQLString
+            },
+            count: {
+              type: GraphQLString
+            }
+          },
+          resolve: async function(root,params){
+            var pdmodel = null;
+            var newpd=null; 
+            PurchaseDetails.find({name:params.name,username:params.username}).then(async doc => {
+              console.log(params.count)
+              if(doc[0]==null){
+                pdmodel=new PurchaseDetails(params);
+                newpd = pdmodel.save()
+            }
+            else{
+              var obj=await PurchaseDetails.findOne({name:params.name,username:params.username})
+              var cnt=Number(obj.count)+1
+              const cntstr=cnt.toString()
+              console.log(cntstr)
+              pdmodel=await PurchaseDetails.findOneAndUpdate({name:params.name,username:params.username},
+                {count:cntstr},{
+                  new: true
+                })
+              return pdmodel;
+            }
+              
+            })
+            .catch(err => {
+              console.error(err)
+            })
+            
+    const result = await LoginModel.findOne({username:params.username}).exec();
+            return result
+          }
+        },
         deleteProduct: {
           type: productType,
           args :{

@@ -51,7 +51,7 @@ products:any;
 
   }
   logOut(){
-
+    localStorage.setItem('username','')
     this.router.navigate(['/'])
   }
 createProduct(){
@@ -69,4 +69,57 @@ deleteProduct(name,type,details){
   var obj={'name':name,'type':type,'details':details}
   this.dialog.open(DeleteproductComponent,{data:obj});
 }
+buyProduct(name){
+  var uname:String=localStorage.getItem('username')
+  var cnt:String='1'
+console.log(name+' '+uname+' '+cnt)
+this.apollo.mutate({
+  mutation: gql`
+  mutation addPurchaseDetails(
+    $name: String!,
+    $username: String!,
+    $count: String) {
+      addPurchaseDetails(
+        name: $name,
+        username: $username,
+        count: $count) {
+          name
+          username
+          count
+        }
+        
+    
+}
+  
+  `,
+  variables:{
+    name:name,
+    username:uname,
+    count:cnt
+  }
+})
+.subscribe(result=>{
+  
+  
+    Object.entries(result.data).forEach(entry => {
+      
+      
+        alert('Success')
+        
+        location.reload()
+
+      
+
+
+  })
+    //alert("Username already exists")
+  
+  
+
+})
+
+
+}
+
+
 }

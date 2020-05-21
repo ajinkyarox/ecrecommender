@@ -20,6 +20,9 @@
       <th>
           Update/Delete
       </th>
+      <th>
+        Buy
+      </th>
     </tr>
   
     <tr *ngFor = "let product of products">
@@ -34,6 +37,9 @@
       </td>
       <td>
           <button (click)="updateProduct(product.name,product.type,product.details)">Update</button>&nbsp;&nbsp;<button (click)="deleteProduct(product.name,product.type,product.details)" >Delete</button>
+      </td>
+      <td>
+        <button (click)="buyProduct(product.name)">Buy</button>
       </td>
     </tr>
   
