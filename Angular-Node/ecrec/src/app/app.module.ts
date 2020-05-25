@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { CreateproductComponent } from './createproduct/createproduct.component';
 import { UpdateproductComponent } from './updateproduct/updateproduct.component';
 import { DeleteproductComponent } from './deleteproduct/deleteproduct.component';
+import { ProductdetailsComponent } from './productdetails/productdetails.component';
 
 
 
@@ -31,7 +32,8 @@ import { DeleteproductComponent } from './deleteproduct/deleteproduct.component'
     LoginComponent,
     CreateproductComponent,
     UpdateproductComponent,
-    DeleteproductComponent
+    DeleteproductComponent,
+    ProductdetailsComponent
   ],
   imports: [
     BrowserModule,

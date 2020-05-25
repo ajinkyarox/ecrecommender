@@ -27,7 +27,7 @@
   
     <tr *ngFor = "let product of products">
       <td>
-        {{product.name}}
+        <button (click)="productDetails(product.name)" >{{product.name}}</button>   
       </td>
       <td>
           {{product.type}}

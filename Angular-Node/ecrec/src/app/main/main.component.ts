@@ -69,6 +69,11 @@ deleteProduct(name,type,details){
   var obj={'name':name,'type':type,'details':details}
   this.dialog.open(DeleteproductComponent,{data:obj});
 }
+
+productDetails(nme){
+  this.router.navigate(['/productdetails'],{ queryParams: { name: nme } })
+}
+
 buyProduct(name){
   var uname:String=localStorage.getItem('username')
   var cnt:String='1'
