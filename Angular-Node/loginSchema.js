@@ -10,7 +10,24 @@ var GraphQLDate = require('graphql-date');
 var LoginModel = require('./login');
 var ProductModel=require('./products')
 var PurchaseDetails=require('./purchasedetails')
+var LikedProducts=require('./likedproducts')
 var flag=false;
+
+var likedProductsType = new GraphQLObjectType({
+  name: 'likedproducts',
+  fields: function () {
+    return {
+      
+      username: {
+        type: GraphQLString
+      },
+      name: {
+        type: GraphQLString
+      }
+    }
+  }
+});
+
 
 var loginType = new GraphQLObjectType({
     name: 'login',
@@ -90,6 +107,23 @@ var loginType = new GraphQLObjectType({
             
             return await ProductModel.find({})          
           }
+        },
+        likedproducts:{
+          type: likedProductsType,
+          args: {
+            username: {
+              type: GraphQLString
+            },
+            name: {
+              type: GraphQLString
+            }
+          },
+          resolve: async function (root, params) {
+            console.log(params.username+' '+params.name)
+            const res=await LikedProducts.findOne({username:params.username,name:params.name})
+            console.log(res)
+            return res          
+          }
         }
       }
     }
@@ -101,6 +135,30 @@ var loginType = new GraphQLObjectType({
     fields: function () {
       
       return {
+        addLikedProducts: {
+type:likedProductsType,
+args :{
+  
+  username: {
+    type: GraphQLString
+  },
+  name: {
+    type: GraphQLString
+  }
+},
+
+resolve: async function(root,params){
+  var pdmodel = null;
+   
+  pdmodel=new LikedProducts(params);
+      newpd = pdmodel.save()
+  
+const result = await LikedProducts.findOne({username:params.username,name:params.name}).exec();
+  return result
+}
+
+
+        },
         addPurchaseDetails: {
           type: purchaseDetailsType,
           args :{
