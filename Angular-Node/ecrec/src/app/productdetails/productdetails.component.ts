@@ -11,6 +11,7 @@ import gql from 'graphql-tag';
 export class ProductdetailsComponent implements OnInit {
 name=''
 flag:boolean=false
+unflag:boolean=false
   constructor(private activatedRoute: ActivatedRoute,private router: Router,private apollo: Apollo) { }
 
   ngOnInit(): void {
@@ -44,6 +45,45 @@ flag:boolean=false
             console.log(result.data)
                       if(entry[1]!=null){
                         this.flag=true
+                      }
+                      else{
+                        this.apollo.query({
+                          query: gql`
+                          query unlikedproducts(
+                            $username: String!,
+                            $name: String!) {
+                              unlikedproducts(
+                                username: $username,
+                                name: $name) {
+                                  username
+                                  name
+                                }
+                                
+                            
+                        }       `,
+                         variables:{
+                           username:localStorage.getItem('username'),
+                           name:params['name']
+                         }
+                        })
+                        .subscribe(result=>{
+                          
+                          
+                            Object.entries(result.data).forEach(entry => {
+                              console.log(result.data)
+                                        if(entry[1]!=null){
+                                          this.unflag=true
+                                        }
+                                       
+                                          
+                                        
+                    
+                          })
+                            //alert("Username already exists")
+                          
+                          
+                    
+                        })                
                       }
   
         })
@@ -111,6 +151,48 @@ flag:boolean=false
 
   }
 unlikeProduct(){
+  this.apollo.mutate({
+    mutation: gql`
+    mutation addUnlikedProducts(
+      $username: String!,
+      $name: String!) {
+        addUnlikedProducts(
+          username: $username,
+          name: $name) {
+            username
+            name
+            
+          }
+          
+      
+  }
+    
+    `,
+    variables:{
+      username:localStorage.getItem('username'),
+      name:this.name
+     
+    }
+  })
+  .subscribe(result=>{
+    
+    
+      Object.entries(result.data).forEach(entry => {
+        
+        console.log(result.data)
+          alert('Success')
+          
+          location.reload()
+
+        
+      
+
+    })
+      //alert("Username already exists")
+    
+    
+
+  })
 
 }
   back(){

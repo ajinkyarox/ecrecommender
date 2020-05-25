@@ -11,10 +11,26 @@ var LoginModel = require('./login');
 var ProductModel=require('./products')
 var PurchaseDetails=require('./purchasedetails')
 var LikedProducts=require('./likedproducts')
+var UnlikedProducts=require('./unlikedproducts')
 var flag=false;
 
 var likedProductsType = new GraphQLObjectType({
   name: 'likedproducts',
+  fields: function () {
+    return {
+      
+      username: {
+        type: GraphQLString
+      },
+      name: {
+        type: GraphQLString
+      }
+    }
+  }
+});
+
+var unlikedProductsType = new GraphQLObjectType({
+  name: 'unlikedproducts',
   fields: function () {
     return {
       
@@ -108,6 +124,23 @@ var loginType = new GraphQLObjectType({
             return await ProductModel.find({})          
           }
         },
+        unlikedproducts:{
+type:unlikedProductsType,
+args: {
+  username: {
+    type: GraphQLString
+  },
+  name: {
+    type: GraphQLString
+  }
+},
+resolve: async function (root, params) {
+  console.log(params.username+' '+params.name)
+  const res=await UnlikedProducts.findOne({username:params.username,name:params.name})
+  console.log(res)
+  return res          
+}
+        },
         likedproducts:{
           type: likedProductsType,
           args: {
@@ -135,6 +168,33 @@ var loginType = new GraphQLObjectType({
     fields: function () {
       
       return {
+addUnlikedProducts:{
+
+  type:unlikedProductsType,
+  args :{
+    
+    username: {
+      type: GraphQLString
+    },
+    name: {
+      type: GraphQLString
+    }
+  },
+  
+  resolve: async function(root,params){
+    var pdmodel = null;
+     
+    pdmodel=new UnlikedProducts(params);
+        newpd = pdmodel.save()
+        LikedProducts.deleteOne({username:params.username,name:params.name}, function (err) {
+          if(err) console.log(err);
+          console.log("Successful deletion");
+        });
+  const result = await UnlikedProducts.findOne({username:params.username,name:params.name}).exec();
+    return result
+  }
+},
+
         addLikedProducts: {
 type:likedProductsType,
 args :{
@@ -153,6 +213,11 @@ resolve: async function(root,params){
   pdmodel=new LikedProducts(params);
       newpd = pdmodel.save()
   
+      UnlikedProducts.deleteOne({username:params.username,name:params.name}, function (err) {
+        if(err) console.log(err);
+        console.log("Successful deletion");
+      });
+
 const result = await LikedProducts.findOne({username:params.username,name:params.name}).exec();
   return result
 }
