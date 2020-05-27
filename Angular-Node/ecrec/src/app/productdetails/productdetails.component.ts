@@ -10,6 +10,7 @@ import gql from 'graphql-tag';
 })
 export class ProductdetailsComponent implements OnInit {
 name=''
+type=''
 flag:boolean=false
 unflag:boolean=false
   constructor(private activatedRoute: ActivatedRoute,private router: Router,private apollo: Apollo) { }
@@ -18,24 +19,71 @@ unflag:boolean=false
     
     this.activatedRoute.queryParams.subscribe(params => {
       this.name = params['name'];
+      this.type=params['type']
+
       console.log(localStorage.getItem('username') + ' '+params['name'])
       this.apollo.query({
         query: gql`
-        query likedproducts(
+        query recproducts(
           $username: String!,
-          $name: String!) {
-            likedproducts(
+          $name: String!,
+          $type:String) {
+            recproducts(
               username: $username,
-              name: $name) {
+              name: $name,
+              type: $type) {
                 username
                 name
+                type
               }
               
           
       }       `,
        variables:{
          username:localStorage.getItem('username'),
-         name:params['name']
+         name:params['name'],
+         type:this.type
+       }
+      })
+      .subscribe(result=>{
+        
+        
+          Object.entries(result.data).forEach(entry => {
+            console.log(result.data)
+                      
+                     
+                        
+                      
+  
+        })
+          //alert("Username already exists")
+        
+        
+  
+      })
+
+
+      this.apollo.query({
+        query: gql`
+        query likedproducts(
+          $username: String!,
+          $name: String!,
+          $type:String) {
+            likedproducts(
+              username: $username,
+              name: $name, 
+              type:$type) {
+                username
+                name
+                type
+              }
+              
+          
+      }       `,
+       variables:{
+         username:localStorage.getItem('username'),
+         name:params['name'],
+         type:this.type
        }
       })
       .subscribe(result=>{
@@ -51,19 +99,23 @@ unflag:boolean=false
                           query: gql`
                           query unlikedproducts(
                             $username: String!,
-                            $name: String!) {
+                            $name: String!,
+                            $type:String) {
                               unlikedproducts(
                                 username: $username,
-                                name: $name) {
+                                name: $name,
+                                type: $type) {
                                   username
                                   name
+                                  type
                                 }
                                 
                             
                         }       `,
                          variables:{
                            username:localStorage.getItem('username'),
-                           name:params['name']
+                           name:params['name'],
+                           type:this.type
                          }
                         })
                         .subscribe(result=>{
@@ -109,13 +161,14 @@ unflag:boolean=false
       mutation: gql`
       mutation addLikedProducts(
         $username: String!,
-        $name: String!) {
+        $name: String!,
+        $type:String) {
           addLikedProducts(
             username: $username,
-            name: $name) {
+            name: $name,type:$type) {
               username
               name
-              
+              type
             }
             
         
@@ -124,7 +177,8 @@ unflag:boolean=false
       `,
       variables:{
         username:localStorage.getItem('username'),
-        name:this.name
+        name:this.name,
+        type:this.type
        
       }
     })
@@ -155,13 +209,15 @@ unlikeProduct(){
     mutation: gql`
     mutation addUnlikedProducts(
       $username: String!,
-      $name: String!) {
+      $name: String!,
+      $type: String) {
         addUnlikedProducts(
           username: $username,
-          name: $name) {
+          name: $name,
+          type:$type) {
             username
             name
-            
+            type
           }
           
       
@@ -170,7 +226,8 @@ unlikeProduct(){
     `,
     variables:{
       username:localStorage.getItem('username'),
-      name:this.name
+      name:this.name,
+      type:this.type
      
     }
   })

@@ -1,5 +1,5 @@
 <h1>
-    Welcome
+    Welcome {{user_name}}
 </h1>
 <br><br>
 <button (click)="logOut()">LogOut</button>
@@ -27,7 +27,7 @@
   
     <tr *ngFor = "let product of products">
       <td>
-        <button (click)="productDetails(product.name)" >{{product.name}}</button>   
+        <button (click)="productDetails(product.name,product.type)" >{{product.name}}</button>   
       </td>
       <td>
           {{product.type}}

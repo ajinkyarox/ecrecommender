@@ -16,8 +16,9 @@ export class MainComponent implements OnInit {
 
   constructor(private apollo: Apollo,private router: Router,private  dialog:  MatDialog) { }
 products:any;
-  ngOnInit(): void {
-
+user_name=''
+ngOnInit(): void {
+this.user_name=localStorage.getItem('username')
     this.apollo.query({
       query: gql`
       query {
@@ -70,8 +71,8 @@ deleteProduct(name,type,details){
   this.dialog.open(DeleteproductComponent,{data:obj});
 }
 
-productDetails(nme){
-  this.router.navigate(['/productdetails'],{ queryParams: { name: nme } })
+productDetails(nme,tpe){
+  this.router.navigate(['/productdetails'],{ queryParams: { name: nme ,type:tpe} })
 }
 
 buyProduct(name){

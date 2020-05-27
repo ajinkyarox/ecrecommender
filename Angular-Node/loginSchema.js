@@ -13,6 +13,26 @@ var PurchaseDetails=require('./purchasedetails')
 var LikedProducts=require('./likedproducts')
 var UnlikedProducts=require('./unlikedproducts')
 var flag=false;
+var score=0;
+var uname='';
+var recProductsType = new GraphQLObjectType({
+  name: 'recproducts',
+  fields: function () {
+    return {
+      username: {
+        type: GraphQLString
+      },
+      name: {
+        type: GraphQLString
+      },
+      
+      type: {
+        type: GraphQLString
+      }
+
+    }
+  }
+});
 
 var likedProductsType = new GraphQLObjectType({
   name: 'likedproducts',
@@ -23,6 +43,10 @@ var likedProductsType = new GraphQLObjectType({
         type: GraphQLString
       },
       name: {
+        type: GraphQLString
+      },
+      
+      type: {
         type: GraphQLString
       }
     }
@@ -38,6 +62,9 @@ var unlikedProductsType = new GraphQLObjectType({
         type: GraphQLString
       },
       name: {
+        type: GraphQLString
+      },
+      type: {
         type: GraphQLString
       }
     }
@@ -101,6 +128,70 @@ var loginType = new GraphQLObjectType({
     name: 'Query',
     fields: function () {
       return {
+        recproducts:{
+          type:GraphQLList(recProductsType),
+          args:{
+            username: {
+              type: GraphQLString
+            },
+            name: {
+              type: GraphQLString
+            },
+            
+            type: {
+              type: GraphQLString
+            }
+      
+          },
+          resolve: async function (root, params) {
+            var lpunarray=await LikedProducts.find({type:params.type})
+            var lp=await LikedProducts.find({username:params.username,type:params.type})
+            
+            
+            for(let i=0;i<lpunarray.length;i++) {
+              
+              if(lpunarray[i].username!=params.username){
+                var tempsc=0
+                var smarray=await LikedProducts.find({username:lpunarray[i].username,type:params.type})
+                for(let j=0;j<lp.length;j++){
+                  for(let k=0;k<smarray.length;k++){
+                    if(lp[j].name==smarray[k].name && lp[j].type==params.type){
+                      tempsc=tempsc+1
+                      
+                    }
+                  }
+                }
+                if(score<tempsc){
+                  score=tempsc
+                  
+                  uname=lpunarray[i].username
+
+                }
+              }
+            }
+            console.log("Username "+uname+" score "+score)
+             var unlp=await UnlikedProducts.find({username:params.username,type:params.type})
+             
+            var rc=await LikedProducts.find({username:uname,type:params.type})
+             
+            for(let i=0;i<rc.length;i++){
+              if(rc[i].name==params.name){
+                  
+                rc.splice(i,1)
+                
+              }
+              for(let j=0;j<unlp.length;j++) {
+                if(rc[i].name==unlp[j].name){
+                  
+                  rc.splice(i,1)
+                }
+                
+              }
+            }
+            
+            return rc          
+          }
+        },
         login: {
           type: loginType,
           args: {
@@ -132,7 +223,12 @@ args: {
   },
   name: {
     type: GraphQLString
+  },
+  
+  type: {
+    type: GraphQLString
   }
+
 },
 resolve: async function (root, params) {
   console.log(params.username+' '+params.name)
@@ -149,7 +245,12 @@ resolve: async function (root, params) {
             },
             name: {
               type: GraphQLString
+            },
+            
+            type: {
+              type: GraphQLString
             }
+      
           },
           resolve: async function (root, params) {
             console.log(params.username+' '+params.name)
@@ -178,7 +279,12 @@ addUnlikedProducts:{
     },
     name: {
       type: GraphQLString
+    },
+    
+    type: {
+      type: GraphQLString
     }
+
   },
   
   resolve: async function(root,params){
@@ -204,7 +310,12 @@ args :{
   },
   name: {
     type: GraphQLString
+  },
+  
+  type: {
+    type: GraphQLString
   }
+
 },
 
 resolve: async function(root,params){
