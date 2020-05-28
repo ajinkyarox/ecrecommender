@@ -13,6 +13,7 @@ name=''
 type=''
 flag:boolean=false
 unflag:boolean=false
+recproducts:any=[]
   constructor(private activatedRoute: ActivatedRoute,private router: Router,private apollo: Apollo) { }
 
   ngOnInit(): void {
@@ -49,7 +50,7 @@ unflag:boolean=false
         
         
           Object.entries(result.data).forEach(entry => {
-            console.log(result.data)
+            this.recproducts=result.data.recproducts
                       
                      
                         
@@ -155,6 +156,11 @@ unflag:boolean=false
 
 
   }
+
+  productDetails(nme,tpe){
+    this.router.navigate(['/productdetails'],{ queryParams: { name: nme ,type:tpe} })
+  }
+
 
   likeProduct(){
     this.apollo.mutate({

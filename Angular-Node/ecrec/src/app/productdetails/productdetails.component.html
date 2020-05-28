@@ -5,3 +5,27 @@
 <button (click)="back()">Back to Main Page</button>
 <br><br>
 <button *ngIf="flag==false" (click)="likeProduct()">Like</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button *ngIf="unflag==false" (click)="unlikeProduct()">Un-Like</button>
+<br><br>
+<h2>Recommended Products</h2>
+<table id="products">
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Type
+      </th>
+      
+    </tr>
+  
+    <tr *ngFor = "let product of recproducts">
+      <td>
+        <button (click)="productDetails(product.name,product.type)" >{{product.name}}</button>   
+      </td>
+      <td>
+          {{product.type}}
+      </td>
+      
+    </tr>
+  
+  </table>
