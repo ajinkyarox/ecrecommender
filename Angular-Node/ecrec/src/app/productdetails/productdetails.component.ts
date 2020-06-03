@@ -50,8 +50,9 @@ recproducts:any=[]
         
         
           Object.entries(result.data).forEach(entry => {
-            this.recproducts=result.data.recproducts
-                      
+            
+            this.recproducts=entry[1]
+                      console.log(this.recproducts)
                      
                         
                       

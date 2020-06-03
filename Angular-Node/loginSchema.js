@@ -396,6 +396,18 @@ const result = await LikedProducts.findOne({username:params.username,name:params
               if(err) console.log(err);
               console.log("Successful deletion");
             });
+            LikedProducts.deleteMany({name:params.name}, function (err) {
+              if(err) console.log(err);
+              console.log("Successful deletion");
+            })
+            UnlikedProducts.deleteMany({name:params.name}, function (err) {
+              if(err) console.log(err);
+              console.log("Successful deletion");
+            })
+            PurchaseDetails.deleteMany({name:params.name}, function (err) {
+              if(err) console.log(err);
+              console.log("Successful deletion");
+            })
           }
         },
         updateProduct: {
